@@ -1,0 +1,46 @@
+{
+    "Server1":
+    {
+        "user" : "etd_alert",
+        "passwd" : "jan@1234",
+        "ashost" : "10.31.101.161",
+        "sysnr" : "04",
+        "client" : "100"
+    },
+    "Server2":
+    {
+        "user" : "etd_alert_1",
+        "passwd" : "jan@12345",
+        "ashost" : "10.31.101.162",
+        "sysnr" : "05",
+        "client" : "101",
+        "server":"server2"
+    },
+    "Server3":
+    {
+        "user" : "etd_alert_1",
+        "passwd" : "jan@12345",
+        "ashost" : "10.31.101.162",
+        "sysnr" : "05",
+        "client" : "101",
+        "server":"server2"
+    },
+    "Server4":
+    {
+        "user" : "etd_alert_1",
+        "passwd" : "jan@12345",
+        "ashost" : "10.31.101.162",
+        "sysnr" : "05",
+        "client" : "101",
+        "server":"server2"
+    },
+    "Server5":
+    {
+        "user" : "etd_alert_1",
+        "passwd" : "jan@12345",
+        "ashost" : "10.31.101.162",
+        "sysnr" : "05",
+        "client" : "101",
+        "server":"server2"
+    }
+}

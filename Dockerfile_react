@@ -1,0 +1,43 @@
+FROM node:18.16.1
+
+# Set working directory in the container
+WORKDIR /tmp/app
+
+RUN npm install -g tar
+RUN npm install -g create-react-app
+
+RUN npx create-react-app my-app
+
+# Navigate into the my-app folder
+WORKDIR /tmp/app/my-app
+
+# Copy package.json and package-lock.json to the container
+COPY /my-app/package*.json ./
+COPY /my-app/src ./src
+
+
+
+# Install dependencies
+RUN npm install --force @mui/material @emotion/react @emotion/styled 
+RUN npm install --force react-router-dom@5.3.4
+RUN npm install --force react-google-login
+RUN npm install --force gapi-script
+RUN npm install --force bootstrap
+
+
+# Copy the entire codebase to the container
+#COPY . /tmp/app/
+
+
+
+# Build the React app
+#RUN npm run build
+
+# Install nano text editor
+RUN apt-get update && apt-get install -y nano
+
+# Expose the port your React app is running on (default is 3000)
+EXPOSE 3000
+
+# Define the command to start your app
+CMD [ "npm", "start" ]

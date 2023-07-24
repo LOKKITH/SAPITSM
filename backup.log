@@ -1,0 +1,37 @@
+Deployment is set as -->  DEV
+control chosen: {label:
+server chosen: BUS001}
+Unknown control: {label:
+Deployment is set as -->  DEV
+control chosen: BUS001
+server chosen: Server1
+Running BUS001 function
+--------------------- Accessing JSON files ---------------------
+----------01--> BUS001------------------------------------------------------
+Final exceptions filtered length is >  2
+bus001 json -->  [{'edokn': '4500001665', 'fgdat': '20230205', 'fgnam': 'ANSHULA'}, {'edokn': '4500001669', 'fgdat': '20230205', 'fgnam': 'PWCTRAINEE'}]
+uqid -->  [{'edokn': '4500001665', 'fgdat': '20230205', 'fgnam': 'ANSHULA', 'uqid': '4500001665_ANSHULA_20230205'}, {'edokn': '4500001669', 'fgdat': '20230205', 'fgnam': 'PWCTRAINEE', 'uqid': '4500001669_PWCTRAINEE_20230205'}]
+Inserting in the Database...
+Inserting in the Database...
+Creating JSON ticket - BUS001
+---REQUESTS---START---
+http://127.0.0.1:7777/Ticket/API/Create_Ticket
+-------------Try block ----------------
+-----HTTP Exception-----
+Failed to send the file: HTTPConnectionPool(host='127.0.0.1', port=7777): Max retries exceeded with url: /Ticket/API/Create_Ticket (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7faf5ef98460>: Failed to establish a new connection: [Errno 111] Connection refused'))
+Traceback (most recent call last):
+  File "/home/lokkith/Documents/SAP/Flask_api/control_cron.py", line 86, in <module>
+    job_function(sys.argv[1],sys.argv[2])
+  File "/home/lokkith/Documents/SAP/Flask_api/control_cron.py", line 66, in job_function
+    return jsonify(message="BUS001 function scheduled successfully")
+  File "/home/lokkith/.local/lib/python3.10/site-packages/flask/json/__init__.py", line 170, in jsonify
+    return current_app.json.response(*args, **kwargs)
+  File "/home/lokkith/.local/lib/python3.10/site-packages/werkzeug/local.py", line 311, in __get__
+    obj = instance._get_current_object()
+  File "/home/lokkith/.local/lib/python3.10/site-packages/werkzeug/local.py", line 508, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of application context.
+
+This typically means that you attempted to use functionality that needed
+the current application. To solve this, set up an application context
+with app.app_context(). See the documentation for more information.

@@ -1,0 +1,12 @@
+{
+
+    "jira_url": "http://20.197.28.113:9000",
+    "jira_issueEndpoint": "/rest/api/2/issue/",
+
+
+    "elastic_url": "http://elasticdemo.chickenkiller.com",
+    "elastic_index": "/sap_sample_data",
+    "elastic_type": "/_doc/",
+
+    "kibana-url": "http://kibanademo.chickenkiller.com"
+}

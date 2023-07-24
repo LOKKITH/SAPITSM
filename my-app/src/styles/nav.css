@@ -1,0 +1,6 @@
+ .left_link div :hover {
+  border-bottom: 2px solid #454545;
+  box-shadow: rgba(58, 58, 58, 0.45) 0px 25px 20px -20px;
+  cursor: pointer;
+ }
+
