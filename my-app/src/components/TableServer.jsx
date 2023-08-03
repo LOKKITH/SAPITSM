@@ -37,7 +37,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const TableServer = ({
   table2Data,
-  deleteServer,
+  //deleteServer,
   selectedServer,
   handleCheckboxChangeServer,
 }) => {
@@ -71,9 +71,9 @@ const TableServer = ({
                 <StyledTableCell component="th" scope="e">
                   <input
                     type="checkbox"
-                    checked={selectedServer.includes(element.id)}
+                    checked={selectedServer.includes(element.serverList)}
                     onChange={(event) =>
-                      handleCheckboxChangeServer(event, element.id)
+                      handleCheckboxChangeServer(event, element.serverList)
                     }
                   />
                 </StyledTableCell>

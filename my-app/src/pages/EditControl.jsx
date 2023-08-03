@@ -82,17 +82,17 @@ function EditControl() {
       [name]: value,
     });
   };
-  const fetchTableData = async () => {
-    try {
-      const res = await getSingleEditControl(id);
-      // console.log("res", res);
-      setControlData(res.data);
-      setCategory(res.data.CATEGORY);
-      setSeverity(res.data.SEVERITY);
-    } catch (error) {
-      console.error("Error fetching table data:", error);
-    }
-  };
+  // const fetchTableData = async () => {
+  //   try {
+  //     const res = await getSingleEditControl(id);
+  //     // console.log("res", res);
+  //     setControlData(res.data);
+  //     setCategory(res.data.CATEGORY);
+  //     setSeverity(res.data.SEVERITY);
+  //   } catch (error) {
+  //     console.error("Error fetching table data:", error);
+  //   }
+  // };
 
   const handleEditControl = async () => {
     const { EventID, EMAIL, RISK_DESC, RISK_ID, CONTROL_OWNER, CONTROL_DESC } =
@@ -113,17 +113,17 @@ function EditControl() {
     console.log("response", response);
     if (response.status === 200) {
       alert("Control Update successfully!");
-      fetchTableData();
+      //fetchTableData();
       history.push("/configure");
     }
   };
 
   useEffect(() => {
-    fetchTableData();
-  }, [id]);
+    //fetchTableData();
+  }, [id,controlData]);
 
   return (
-    <>
+    <nav>
       <Navbar />
       <Modal show={show} onHide={handleClose}>
         {/* <Modal.Header closeButton>
@@ -210,7 +210,7 @@ function EditControl() {
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+    </nav>
   );
 }
 

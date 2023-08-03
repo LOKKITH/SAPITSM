@@ -1,0 +1,82 @@
+{
+  "Scheduler": [
+    {
+      "serverList": "helo",
+      "UID": "1688368084102",
+      "id": 2
+    },
+    {
+      "serverList": "hello world",
+      "UID": "1688373044479",
+      "id": 9
+    },
+    {
+      "serverList": "new server",
+      "UID": "1688373044479",
+      "id": 10
+    },
+    {
+      "serverList": "ppa",
+      "UID": "1688373044479",
+      "id": 11
+    },
+    {
+      "serverList": "boos",
+      "UID": "1688373044479",
+      "id": 12
+    },
+    {
+      "serverList": "father",
+      "UID": "1688375368326",
+      "id": 14
+    },
+    {
+      "serverList": "beta",
+      "id": 15
+    },
+    {
+      "serverList": "low90",
+      "id": 16
+    },
+    {
+      "serverList": "hello World",
+      "UID": "1689154856802",
+      "id": 17
+    },
+    {
+      "serverList": "check Server89898",
+      "id": 18
+    },
+    {
+      "serverList": "xyz",
+      "id": 19
+    },
+    {
+      "serverList": "bs4",
+      "id": 20
+    }
+  ],
+  "Controls": [
+    {
+      "EventID": "0921",
+      "EMAIL": "Vijay@gmail.com",
+      "RISK_ID": "9211",
+      "RISK_DESC": "main riks",
+      "CATEGORY": "HH_DD_E077",
+      "SEVERITY": "Medium",
+      "Unique_id": "1688821848493",
+      "id": 31
+    },
+    {
+      "EventID": "123",
+      "EMAIL": "ravi@gmail.com",
+      "RISK_ID": "123",
+      "RISK_DESC": "hello world",
+      "CATEGORY": "ITSec Control",
+      "SEVERITY": "High",
+      "Unique_id": "1689068507679",
+      "id": 32
+    }
+    
+  ]
+}

@@ -57,15 +57,15 @@ const EditServer = () => {
   };
 
  
-  const fetchServerTableData = async () => {
-    try {
-      const res = await getSingleServer(id);
-      console.log("res", res);
-      setServerData(res.data);
-    } catch (error) {
-      console.error("Error fetching table data:", error);
-    }
-  };
+  // const fetchServerTableData = async () => {
+  //   try {
+  //     const res = await getSingleServer(id);
+  //     console.log("res", res);
+  //     setServerData(res.data);
+  //   } catch (error) {
+  //     console.error("Error fetching table data:", error);
+  //   }
+  // };
   const handleEditServer = async (e) => {
     // e.preventDefault();
     const data = new FormData();
@@ -74,15 +74,15 @@ const EditServer = () => {
     const response = await editServerData(id, data);
     console.log("response update", response);
     if (response.status === 200) {
-      alert("Control Update successfully!");
-      fetchServerTableData();
+      alert("Server Updated successfully!");
+      //fetchServerTableData();
       history.push("/configure");
     }
   };
 
   useEffect(() => {
-    fetchServerTableData();
-  }, [id]);
+    //fetchServerTableData();
+  }, [id,serverData]);
   return (
     <>
       <Navbar />

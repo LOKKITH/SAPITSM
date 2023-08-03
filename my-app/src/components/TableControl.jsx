@@ -69,8 +69,8 @@ const TableControl = ({ table1Data, selectedItems, handleCheckboxChange }) => {
                 <StyledTableCell component="th" scope="e">
                   <input
                     type="checkbox"
-                    checked={selectedItems.includes(element.id)}
-                    onChange={(event) => handleCheckboxChange(event, element.id)}
+                    checked={selectedItems.includes(element.EventID)}
+                    onChange={(event) => handleCheckboxChange(event, element.EventID)}
                   />
                 </StyledTableCell>
                 <StyledTableCell component="th" scope="element">

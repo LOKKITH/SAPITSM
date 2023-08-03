@@ -40,10 +40,14 @@ class CronJobManager:
         command = f'/usr/bin/python3 /home/lokkith/Documents/SAP/Flask_api/control_cron.py {function_name} {server} {unique_id}>> /home/lokkith/Documents/SAP/backup.log 2>&1'
 
     #         # Add a new cron job with the unique ID
+        #print("command",command)
+
         job = self.cron.new(command=command)
         job.set_comment(unique_id)
         job.setall(schedule)
+        #print('jiob')
         self.cron.write()
+        #print('success')
         return 'Cron jobs created successfully'
 
 
@@ -181,14 +185,14 @@ def delete_server(server_id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/scheduledjob', methods=['POST'])
+@app.route('/scheduledjob', methods=['POST','GET'])
 def handle_api_request():
     client=MongoClient(app.config['MONGO_URI'])
     db=client['scheduler']
     collection=db['backend']
     data = request.get_json()
-    ID="Dummy"
-    #print(data)
+    ID="Req1"
+    print("data",data)
 
     # Process the received data
     Controls = data.get('Control')
@@ -219,6 +223,9 @@ def handle_api_request():
     # print(temp)
     print("result",result)
     print('Data received successfully via API request.')
+    print("servers:",Servers)
+    print("controls:",Controls)
+    print("time:",schedule)
     # if isinstance(Controls,list):
     #     for i in range(len(Controls)):
     #         print(Controls[i])
@@ -233,7 +240,8 @@ def handle_api_request():
     #need to check if its ok to run multiple controls at the same time on the server
     for i in range(len(Servers)):
         for j in range(len(Controls)):
-            manager.add_cron(Controls[j],schedule,ID,Servers[i])
+            rr = manager.add_cron(Controls[j],schedule,ID,Servers[i])
+
         else:
             return jsonify(error="Invalid controls"), 400
     
@@ -241,7 +249,14 @@ def handle_api_request():
 
 
     # Return the response data as JSON
-    return jsonify(result)
+    #return jsonify(result)
+    # data = request.get_json()
+    # # Process the JSON data as needed
+    # # Example: Save data to a database, perform some operations, etc.
+    # print(data)
+    
+    # # Return a JSON response instead of plain text
+    return jsonify({"message": "Data received successfully"})
 
 if __name__ == '__main__':
     app.run()

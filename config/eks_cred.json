@@ -1,6 +1,6 @@
 {
     "serverProtocol" : "http",
-    "serverIP" : "20.204.156.83",
+    "serverIP" : "20.219.250.47",
     "serverPort" : "7777",
     "serverEndpoint" : "/Ticket/API/Create_Ticket"
 }

@@ -147,7 +147,7 @@ class ITSEC001(object):
 
         # client = MongoClient("mongodb://sapitsm:haihello@123@20.204.119.18:27017")
        # client = MongoClient('mongodb://%s:%s@20.204.156.83:27017' % (username, password))
-        client='mongodb+srv://Rohit:Bloodhound@sap.jecebdf.mongodb.net/<database_name>?retryWrites=true&w=majority'
+        client=MongoClient('mongodb+srv://Rohit:Bloodhound@sap.jecebdf.mongodb.net/<database_name>?retryWrites=true&w=majority')
 
         mydb = client["sapsample01"]
 
@@ -228,6 +228,6 @@ class ITSEC001(object):
         # self.utils.send_requests(output_list)
         
         # # sending the data to the Server
-        self.utils.send_requests(output_list, file_name)     
+        self.utils.send_requests(output_list, '/home/lokkith/Documents/SAP/itsec001_data.txt')
         
         return

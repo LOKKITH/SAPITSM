@@ -113,72 +113,159 @@ def login():
     # Authentication failed
         return jsonify({'message': 'Invalid credentials'})
 
-@app.route('/api/controls', methods=['GET'])
+@app.route('/addcontrol', methods=['GET'])
 def get_controls():
     try:
     # Fetch data from MongoDB
-        controls = list(sapdb_collection_one.find({}, {'_id': 0}))
+        client=MongoClient(app.config['MONGO_URI'])
+        db=client['backend']
+        collection=db['controls']
+        controls = list(collection.find({}, {'_id': 0}))
         print(controls)
 
         return jsonify(controls)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/controls', methods=['POST'])
+@app.route('/addcontrol', methods=['POST'])
 def add_control():
     try:
         data = request.get_json()
 
         # Insert data into MongoDB
-        sapdb_collection_one.insert_one(data)
+        client=MongoClient(app.config['MONGO_URI'])
+        db=client['backend']
+        collection=db['controls']
+        collection.insert_one(data)
 
         return jsonify({'message': 'Control added successfully'})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+@app.route('/editcontrolfetch/<id>',methods=['GET'])
+def fetch_control(id):
+    try:
+        client=MongoClient(app.config['MONGO_URI'])
+        db=client['backend']
+        collection=db['controls']
+        controls = list(collection.find({'EventID': id}))
+        print(controls)
 
-@app.route('/api/controls/<control_id>', methods=['DELETE'])
-def delete_control(control_id):
+        return jsonify(controls)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+@app.route('/editcontrol/<id>',methods=['PUT'])
+def display_control(id):
+    try:
+        client=MongoClient(app.config['MONGO_URI'])
+        db=client['backend']
+        collection=db['controls']
+        controls = list(collection.find({}, {'EventID': id}))
+        data=request.get_json()
+        print(data)
+        collection.update_one({'EventID':id},{"$set":data})
+
+
+        return jsonify("Message: control has been updated")
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+@app.route('/editserver/<id>',methods=['PUT'])
+def display_server(id):
+    try:
+        client=MongoClient(app.config['MONGO_URI'])
+        db=client['backend']
+        collection=db['servers']
+        controls = list(collection.find({}, {'serverList': id}))
+        data=request.get_json()
+        print(data)
+        collection.update_one({'serverList':id},{"$set":data})
+
+
+        return jsonify("Message: server has been updated")
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/deletecontrol/<id>', methods=['DELETE'])
+def delete_control(id):
     try:
     # Delete data from MongoDB
-        sapdb_collection_one.delete_one({'EventID': control_id})
+        client=MongoClient(app.config['MONGO_URI'])
+        db=client['backend']
+        collection=db['controls']
+        collection.delete_one({'EventID': id})
 
         return jsonify({'message': 'Control deleted successfully'})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/servers', methods=['GET'])
+@app.route('/addserver', methods=['GET'])
 def get_servers():
     try:
     # Fetch data from MongoDB
-        servers = list(sapdb_collection_two.find({}, {'_id': 0}))
+        client=MongoClient(app.config['MONGO_URI'])
+        db=client['backend']
+        collection=db['servers']
+        servers = list(collection.find({}, {'_id': 0}))
         print(servers)
 
         return jsonify(servers)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/servers', methods=['POST'])
+@app.route('/addserver', methods=['POST'])
 def add_server():
     try:
         data = request.get_json()
+        client=MongoClient(app.config['MONGO_URI'])
+        db=client['backend']
+        collection=db['servers']
 
         # Insert data into MongoDB
-        sapdb_collection_two.insert_one(data)
+        collection.insert_one(data)
 
         return jsonify({'message': 'Server added successfully'})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/servers/<server_id>', methods=['DELETE'])
-def delete_server(server_id):
+@app.route('/deleteserver/<id>', methods=['DELETE'])
+def delete_server(id):
     try:
     # Delete data from MongoDB
-        sapdb_collection_two.delete_one({'serverslist': server_id})
+        client=MongoClient(app.config['MONGO_URI'])
+        db=client['backend']
+        collection=db['servers']
+    
+        collection.delete_one({'serverList': id})
 
         return jsonify({'message': 'Server deleted successfully'})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+@app.route('/controlslist', methods=['GET'])
+def get_controlslist():
+    try:
+    # Fetch data from MongoDB
+        client=MongoClient(app.config['MONGO_URI'])
+        db=client['backend']
+        collection=db['controls']
+        controls = list(collection.distinct("EventID"))
+        print("controllist",controls)
 
+        return jsonify(controls)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/serverslist', methods=['GET'])
+def get_serverslist():
+    try:
+    # Fetch data from MongoDB
+        client=MongoClient(app.config['MONGO_URI'])
+        db=client['backend']
+        collection=db['servers']
+        servers = list(collection.distinct("serverList"))
+        print("serverlist",servers)
+
+        return jsonify(servers)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 @app.route('/scheduledjob', methods=['POST'])
 def handle_api_request():
     client=MongoClient(app.config['MONGO_URI'])
@@ -186,11 +273,11 @@ def handle_api_request():
     collection=db['backend']
     data = request.get_json()
     ID="Dummy"
-    #print(data)
+    print("data recieved:",data)
 
     # Process the received data
     Controls = data.get('Control')
-    Controls=[control['label'] for control in Controls]
+    #Controls=[control['label'] for control in Controls]
     Servers = data.get('Severname')
     #servers = data.get('Servers')
     time = data.get('Start_Time')
@@ -232,8 +319,8 @@ def handle_api_request():
     for i in range(len(Servers)):
         for j in range(len(Controls)):
             manager.add_cron(Controls[j],schedule,ID,Servers[i])
-        else:
-            return jsonify(error="Invalid controls"), 400
+        # else:
+        #     return jsonify(error="Invalid controls"), 400
     
     return "cron jobs scheduled successfully"
 
@@ -242,4 +329,4 @@ def handle_api_request():
     return jsonify(result)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

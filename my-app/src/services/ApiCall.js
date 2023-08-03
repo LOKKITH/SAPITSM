@@ -8,6 +8,7 @@ export const commonRequest = async (methods, url, body, header) => {
       ? header
       : {
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin" : "*"
         },
     data: body,
   };

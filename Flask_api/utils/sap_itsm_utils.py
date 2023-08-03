@@ -476,7 +476,7 @@ class Utilities():
         sheaders = {'Content-Type': 'application/json'}
         
         # read from the EKS creds file
-        filePath  ="config/eks_cred.json"
+        filePath  ="/home/lokkith/Documents/SAP/config/eks_cred.json"
         
         serverData = self.read_json_file(filePath)
         

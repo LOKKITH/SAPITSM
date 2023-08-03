@@ -31,7 +31,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import {useParams, useHistory } from "react-router-dom";
 
 const StyledTabs = styled(Tabs)({
   marginBottom: "16px",
@@ -48,6 +48,7 @@ const StyledTableCell = styled(TableCell)({
 });
 
 const Config = () => {
+  //const { id } = useParams();
   const [controlData, setControlData] = useState({
     EventID: "",
     EMAIL: "",
@@ -162,7 +163,7 @@ const Config = () => {
 
     const response = await addControlData(data);
     // console.log("res", response);
-    if (response.status === 201) {
+    if (response.status === 200) {
       setControlData({
         ...controlData,
         EventID: "",
@@ -186,7 +187,7 @@ const Config = () => {
 
     const response = await addServerData(data);
 
-    if (response.status === 201) {
+    if (response.status === 200) {
       setServerData({
         ...serverData,
         serverList: "",
@@ -221,15 +222,22 @@ const Config = () => {
       alert("Please Only One Row for Delete");
     } else {
       try {
-        await axios.delete("http://localhost:5050/Controls", {
-          data: { id: selectedItems },
-        });
+        // await axios.delete("http://localhost:5050/Controls", {
+        //   data: { id: selectedItems },
+        // });
 
-        setTable1Data(
-          table1Data.filter((item) => !selectedItems.includes(item.id))
-        );
-        fetchTableData();
-        setSelectedItems([]);
+        // setTable1Data(
+        //   table1Data.filter((item) => !selectedItems.includes(item.id))
+        // );
+        // fetchTableData();
+        // setSelectedItems([]);
+        const response = await controlDelete(selectedItems[0]);
+        if (response.status === 200) {
+          alert("Control Deleted");
+          fetchTableData();
+        } else {
+          alert("error");
+        }
       } catch (error) {
         console.log("error", error);
       }
@@ -243,15 +251,23 @@ const Config = () => {
       alert("Please select a row to Delete.");
     } else {
       try {
-        await axios.delete("http://localhost:5050/Scheduler", {
-          data: { id: selectedServer },
-        });
+        // await axios.delete("http://localhost:5050/Scheduler", {
+        //   data: { id: selectedServer },
+        // });
 
-        setTable2Data(
-          table2Data.filter((item) => !selectedItems.includes(item.id))
-        );
-        fetchServerTableData();
-        setSelectedServer([]);
+        // setTable2Data(
+        //   table2Data.filter((item) => !selectedItems.includes(item.id))
+        // );
+        // fetchServerTableData();
+        // setSelectedServer([]);
+        const response = await serverDelete(selectedServer[0]);
+        if (response.status === 200) {
+          
+          alert("Server Deleted");
+          fetchServerTableData();
+          setSelectedServer([]);
+        } else {
+          alert("error");}
       } catch (error) {
         console.log("error", error);
       }
@@ -262,6 +278,7 @@ const Config = () => {
     try {
       const res = await getControlData();
       setTable1Data(res.data.reverse());
+      //selectedItems = [];
     } catch (error) {
       console.error("Error fetching table data:", error);
     }
@@ -276,24 +293,24 @@ const Config = () => {
     }
   };
 
-  const deleteControl = async (id) => {
-    const response = await controlDelete(id);
-    if (response.status === 200) {
-      fetchTableData();
-      alert("Control Delete");
-    } else {
-      alert("error");
-    }
-  };
-  const deleteServer = async (id) => {
-    const response = await serverDelete(id);
-    if (response.status === 200) {
-      fetchServerTableData();
-      alert("Control Delete");
-    } else {
-      alert("error");
-    }
-  };
+  // const deleteControl = async (id) => {
+  //   const response = await controlDelete(id);
+  //   if (response.status === 200) {
+  //     fetchTableData();
+  //     alert("Control Deleted");
+  //   } else {
+  //     alert("error");
+  //   }
+  // };
+  // const deleteServer = async (id) => {
+  //   const response = await serverDelete(id);
+  //   if (response.status === 200) {
+  //     fetchServerTableData();
+  //     alert("Control Delete");
+  //   } else {
+  //     alert("error");
+  //   }
+  // };
 
   const handleEditControl = () => {
     if (!selectedItems.length) {
@@ -494,13 +511,14 @@ const Config = () => {
             {table1Data.length > 0 ? (
               <TableControl
                 table1Data={table1Data}
-                deleteControl={deleteControl}
+                //deleteControl={deleteControl}
                 selectedItems={selectedItems}
                 handleCheckboxChange={handleCheckboxChange}
                 setSelectedItems={setSelectedItems}
               />
             ) : (
-              <Typography variant="body1">No controls found.</Typography>
+              //<Typography variant="body1">No controls found.</Typography>
+              <Typography variant="body1">Loading.</Typography>
             )}
           </>
         )}
@@ -598,7 +616,7 @@ const Config = () => {
             {table2Data.length > 0 ? (
               <TableServer
                 table2Data={table2Data}
-                deleteServer={deleteServer}
+                //deleteServer={deleteServer}
                 selectedServer={selectedServer}
                 handleCheckboxChangeServer={handleCheckboxChangeServer}
               />
